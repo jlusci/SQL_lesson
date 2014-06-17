@@ -40,6 +40,22 @@ def make_new_project(title,description,max_grade):
     CONN.commit()
     print "Successfully added project: %s %s, max pts: %s" % (title, description, max_grade)
 
+def make_new_grade(student_github,title,grade):
+    query = """INSERT into Grades values (?, ?, ?)"""
+    DB.execute(query, (student_github, title, grade))
+    CONN.commit()
+    print "Successfully added grade: %s, %s, points: %s" % (student_github, title, grade)
+
+def get_grades_by_student(first_name,last_name):
+    query = """SELECT Projects.title, Grades.grade, Projects.max_grade FROM Projects JOIN Grades ON (Projects.title = Grades.project_title) JOIN Students ON (Students.github = Grades.student_github) WHERE first_name = ? AND last_name = ?"""
+    DB.execute(query, (first_name,last_name,))
+    rows = DB.fetchall()
+    for row in rows:
+        print """\
+Project title: %s 
+Grade: %s 
+Max points: %s""" % (row[0],row[1],row[2])
+
 def connect_to_db():
     global DB, CONN
     CONN = sqlite3.connect("hackbright.db")
@@ -66,6 +82,11 @@ def main():
         elif command == "student_project_grade":
             args = " ".join(tokens[1:]).split(', ')
             get_grade_by_project(*args)
+        elif command == "new_grade":
+            args = " ".join(tokens[1:]).split(', ')
+            make_new_grade(*args)
+        elif command == "student_grades":
+            get_grades_by_student(*args)
 
 
 
