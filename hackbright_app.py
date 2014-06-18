@@ -7,9 +7,11 @@ def get_student_by_github(github):
     query = """SELECT first_name, last_name, github FROM Students WHERE github = ?"""
     DB.execute(query, (github,))
     row = DB.fetchone()
-    print """\
-Student: %s %s
-Github account: %s"""%(row[0], row[1], row[2])
+    return row
+
+#      """\
+# Student: %s %s
+# Github account: %s"""%(row[0], row[1], row[2])
 
 def make_new_student(first_name,last_name,github):
     query = """INSERT into Students values (?, ?, ?)"""
@@ -50,11 +52,22 @@ def get_grades_by_student(first_name,last_name):
     query = """SELECT Projects.title, Grades.grade, Projects.max_grade FROM Projects JOIN Grades ON (Projects.title = Grades.project_title) JOIN Students ON (Students.github = Grades.student_github) WHERE first_name = ? AND last_name = ?"""
     DB.execute(query, (first_name,last_name,))
     rows = DB.fetchall()
+    my_student = []
     for row in rows:
-        print """\
-Project title: %s 
-Grade: %s 
-Max points: %s""" % (row[0],row[1],row[2])
+        my_dict = {}
+        my_dict['title'] = row[0]
+        my_dict['grade'] = row[1]
+        my_dict['max_grade'] = row[2]
+        my_student.append(my_dict)
+    
+    return my_student
+    #This is if we need a dictionary?
+    #     my_dict[row[0]] = (row[1],row[2])
+    # return my_dict
+#          """\
+# Project title: %s 
+# Grade: %s 
+# Max points: %s""" % (row[0],row[1],row[2])
 
 def connect_to_db():
     global DB, CONN
