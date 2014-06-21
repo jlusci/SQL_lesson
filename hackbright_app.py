@@ -23,10 +23,33 @@ def get_grade_by_project(first_name,last_name,project_title):
     query = """SELECT Students.first_name,Students.last_name,Grades.project_title,Grades.grade FROM Grades JOIN Students ON (Students.github = Grades.student_github) WHERE first_name = ? AND last_name = ? AND project_title = ?"""
     DB.execute(query, (first_name,last_name,project_title,))
     row = DB.fetchone()
+    # for row in rows:
+    #     my_dict = {}
+    #     my_dict['first_name'] = row[0]
+    #     my_dict['last_name'] = row[1]
+    #     my_dict['project_title'] = row[2]
+    #     my_dict['grade'] = row[3]
+    #     my_project.append(my_dict)
+    # return my_project
     print """\
 Student: %s %s
 Project: %s
 Grade: %d""" % (row[0],row[1],row[2],row[3])
+
+def get_all_grades_by_project(project_title):
+    query = """SELECT Students.first_name,Students.last_name,Grades.project_title,Grades.grade FROM Grades JOIN Students ON (Students.github = Grades.student_github) WHERE project_title = ?"""
+    DB.execute(query, (project_title,))
+    rows = DB.fetchall()
+    my_project =[]
+    for row in rows:
+        my_dict = {}
+        my_dict['first_name'] = row[0]
+        my_dict['last_name'] = row[1]
+        my_dict['project_title'] = row[2]
+        my_dict['grade'] = row[3]
+        my_project.append(my_dict)
+    return my_project
+# my_project[0].get('project_title')
 
 def get_project_by_title(title):
     query = """SELECT title, description FROM Projects WHERE title = ?"""

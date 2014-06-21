@@ -1,0 +1,11 @@
+<html>
+    <body>
+        <h1>Project: {{project_title}}</h1>
+        
+        {% for item in all_project_grades_list %}
+            <h2>Student: {{item.last_name}}, {{item.first_name}}</h2>
+            <h3>Grade: {{item.grade}}</h3>
+        {% endfor %}
+        
+    </body>
+</html>

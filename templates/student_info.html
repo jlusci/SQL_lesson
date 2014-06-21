@@ -1,13 +1,13 @@
 <html>
-<body>
-<h1>Student: {{last_name}}, {{first_name}}</h1>
-<h2>Github: {{github}}</h2>
-{% for item in student_grades_list %}
-<h2>Project: {{item.title}}</h2>
-<p>Grade: {{item.grade}}</p>
-<p>Max Grade: {{item.max_grade}}</p>
-{% endfor %}
-<p>This student has shown extreme recalcitrance and has generally proved to be unreliable.</p>
-<p>It is my recommendation that they be put on double-secret probation for the remainder of the course.</p>
-</body>
+    <body>
+        <h1>Student: {{last_name}}, {{first_name}}</h1>
+        <h2>Github: {{github}}</h2>
+        {% for item in student_grades_list %}
+            <h2>Project: <a href="/project?project={{item.title}}">{{item.title}}</a></h2>
+            <p>Grade: {{item.grade}}</p>
+            <p>Max Grade: {{item.max_grade}}</p>
+        {% endfor %}
+        <p>This student has shown extreme recalcitrance and has generally proved to be unreliable.</p>
+        <p>It is my recommendation that they be put on double-secret probation for the remainder of the course.</p>
+    </body>
 </html>

@@ -29,5 +29,24 @@ def get_student():
                                                 student_grades_list=student_grades_list)
     return html
 
+@app.route("/project")
+def get_project():
+    hackbright_app.connect_to_db()
+    project_title = request.args.get("project")
+    all_project_grades_list = hackbright_app.get_all_grades_by_project(project_title)
+    # first_name = project_grades[0]
+    # last_name = project_grades[1]
+    # project_name = project_grades[2]
+    # student_grade = project_grades[3]
+
+    html = render_template("project_info.html", project_title=project_title,
+                                                all_project_grades_list=all_project_grades_list)
+    return html
+                                                # first_name=first_name,
+                                                # last_name=last_name,
+                                                # project_title=project_name,
+                                                # student_grade=student_grade)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
